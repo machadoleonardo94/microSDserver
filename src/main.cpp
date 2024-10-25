@@ -2,9 +2,8 @@
 //* Shared:
 #include "shared/dependencies.h"
 
-//* --------------------------------------------------------
-//* ---------------------- Void Setup ----------------------
-//* --------------------------------------------------------
+FtpServer ftpSrv;
+
 void setup()
 {
     //* --- INIT COMPONENT SETUP ---
@@ -13,15 +12,9 @@ void setup()
     setup_ESP32();
     setup_LEDS(); //* Enables debug WS2812B LED
     setup_display();
-    setup_sdcard(); //* Enables microSD card for datalog
-    //  check_backlog_files();
+    if (setup_sdcard())
+        ftpSrv.begin("esp32", "esp32");
 
-    /*
-    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send(SD, "/index.html", "text/html"); });
-    server.serveStatic("/", SD, "/");
-    server.begin();
-    */
     //* Finished startup routine.
     loopTimer = millis();
 }
@@ -32,6 +25,7 @@ void setup()
 void loop()
 {
     ArduinoOTA.handle();
+    ftpSrv.handleFTP();
     //? Dá comida pro cachorro não morder
     esp_task_wdt_reset();
     if (millis() - loopTimer > 1000)

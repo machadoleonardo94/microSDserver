@@ -2,8 +2,6 @@
 //* Shared:
 #include "shared/dependencies.h"
 
-FtpServer ftpSrv;
-
 void setup()
 {
     //* --- INIT COMPONENT SETUP ---

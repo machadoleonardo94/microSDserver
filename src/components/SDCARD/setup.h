@@ -17,7 +17,7 @@ void setup_sdcard()
         return;
     }
 
-    if (!SD.begin(5))
+    if (!SD.begin(CS_pin))
     {
         serialMon.println("Card Mount Failed");
         return;

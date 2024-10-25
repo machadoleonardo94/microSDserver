@@ -17,12 +17,13 @@
 #include <Adafruit_SSD1306.h>
 //* WiFi
 #include <WiFi.h>
-#include <ESPWiFiManager.h>
-// #include <AsyncTCP.h>
-//  #include <ESPAsyncWebServer.h>
+#include <WiFiManager.h>
+#include <AsyncTCP.h>
+#include "ESPAsyncWebServer.h"
 //* Watchdog
 #include <esp_task_wdt.h>
 //* EEPROM
+#include <EEPROM.h>
 #include <LittleFS.h>
 //* Over the Air update
 #include <ArduinoOTA.h>

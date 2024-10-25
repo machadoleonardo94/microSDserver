@@ -6,7 +6,7 @@
 
 void setup_ESP32()
 {
-    serial.println("[ESP32] SETUP STARTED!");
+    Serial.println("[ESP32] SETUP STARTED!");
 
     //* Setup bluetooth
     btStop();
@@ -18,7 +18,7 @@ void setup_ESP32()
     esp_task_wdt_init(60, true);
     esp_task_wdt_add(NULL);
 
-    serial.println("[ESP32] SETUP FINISHED!");
+    Serial.println("[ESP32] SETUP FINISHED!");
 }
 
 #endif // SETUP_ESP32

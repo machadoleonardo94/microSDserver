@@ -31,27 +31,30 @@ void setup()
     }
 
     // Initialise OTA
-    wifi_client.setCACert(OTAGH_CA_CERT); // Set the api.github.cm SSL cert on the WiFiSecure modem
+    wifi_client.setCACert(OTAGH_CA_CERT); // Set the api.github.cm SSL cert on the WiFi Client
     OTA::init(wifi_client);
 
-    // Check OTA for updates
+    // 1. Check for updates, by checking the latest release on GitHub
+    // .. (n.b. get more control on OTA Hub Pro!)
     OTA::UpdateObject details = OTA::isUpdateAvailable();
     details.print();
-    if (OTA::NO_UPDATE != details.condition)
-    {
-        Serial.println("An update is available!");
-        // Perform OTA update
-        OTA::InstallCondition result = OTA::performUpdate(&details);
-        // GitHub hosts files on different server, so we have to follow the redirect, unfortunately.
-        if (result == OTA::REDIRECT_REQUIRED)
-        {
-            wifi_client.setCACert(OTAGH_REDIRECT_CA_CERT); // Now set the objects.githubusercontent.com SSL cert
-            OTA::continueRedirect(&details);               // Follow the redirect and performUpdate.
-        }
-    }
-    else
+
+    if (OTA::NO_UPDATE == details.condition)
     {
         Serial.println("No new update available. Continuing...");
+    }
+    else
+    // 2. Perform the update (if there is one)
+    {
+        OTA::InstallCondition result = OTA::performUpdate(&details);
+
+        if (result == OTA::REDIRECT_REQUIRED)
+        {
+            // Step 3: Follow GitHub's redirect to get the asset files
+            // .. (n.b. this is faster and easier over on OTA Hub Pro!)
+            wifi_client.setCACert(OTAGH_REDIRECT_CA_CERT); // Set the objects.githubusercontent.com SSL cert
+            OTA::continueRedirect(&details);               // Follow the redirect and performUpdate.
+        }
     }
 
     //* Finished startup routine.

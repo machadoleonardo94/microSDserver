@@ -4,7 +4,7 @@
 
 // OTA Hub via GitHub
 #define OTAGH_OWNER_NAME "machadoleonardo94"
-#define OTAGH_REPO_NAME "OTA-Hub-diy-example_project"
+#define OTAGH_REPO_NAME "microSDserver"
 #include <OTA-Hub-diy.hpp>
 
 // Networking

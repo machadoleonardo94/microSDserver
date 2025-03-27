@@ -70,6 +70,6 @@ void loop()
     {
         loopTimer = millis();
         // updateDisplay();
-        Serial.println(".");
+        Serial.printf(".");
     }
 }

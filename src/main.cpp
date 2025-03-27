@@ -70,6 +70,6 @@ void loop()
     {
         loopTimer = millis();
         // updateDisplay();
-        Serial.printf(".");
+        Serial.printf("Updated firmware yey \n");
     }
 }

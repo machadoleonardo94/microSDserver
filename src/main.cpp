@@ -29,7 +29,7 @@ void loop()
     if (millis() - loopTimer > 1000)
     {
         loopTimer = millis();
-        updateDisplay();
-        // Serial.println("ping");
+        // updateDisplay();
+        Serial.println(".");
     }
 }

@@ -12,7 +12,7 @@ void setup_ESP32()
     btStop();
 
     //* Setup OTA
-    setup_OTA();
+    // setup_OTA();
 
     //* Setup Watchdog
     esp_task_wdt_init(60, true);

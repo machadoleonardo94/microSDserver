@@ -55,7 +55,6 @@
 #include "components/ESP32/setup.h"
 //* Services:
 #include "services/wifi.h"
-#include "services/ESP32FtpServer.h"
 //* Routines:
 #include "routines/update_screen.h"
 

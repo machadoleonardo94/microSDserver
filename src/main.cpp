@@ -5,6 +5,8 @@
 // OTA Hub via GitHub
 #define OTAGH_OWNER_NAME "machadoleonardo94"
 #define OTAGH_REPO_NAME "microSDserver"
+// #define OTAGH_OWNER_NAME "Hard-Stuff"
+// #define OTAGH_REPO_NAME "OTA-Hub-diy-example_project"
 #include <OTA-Hub-diy.hpp>
 
 // Networking
@@ -13,6 +15,10 @@ static const char *WIFI_PASS = "1011121314";
 #include <WiFiClientSecure.h>
 WiFiClientSecure wifi_client;
 
+const char *ntpServer = "pool.ntp.org";
+const long gmtOffset_sec = -10800; // GMT-3 for Brazil // 3 hours * 3600 seconds/hour
+const int daylightOffset_sec = 0;
+
 void setup()
 {
     //* --- INIT COMPONENT SETUP ---
@@ -20,7 +26,7 @@ void setup()
     setup_WIFI();
     setup_ESP32();
     setup_LEDS(); //* Enables debug WS2812B LED
-    setup_display();
+    // setup_display();
 
     WiFi.begin(WIFI_SSID, WIFI_PASS);
 
@@ -29,7 +35,13 @@ void setup()
         Serial.println("WiFi failure");
         ESP.restart();
     }
-
+    // wifi_client.setInsecure();
+    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+    struct tm timeinfo;
+    if (!getLocalTime(&timeinfo))
+    {
+        Serial.println("Failed to obtain time");
+    }
     // Initialise OTA
     wifi_client.setCACert(OTAGH_CA_CERT); // Set the api.github.cm SSL cert on the WiFi Client
     OTA::init(wifi_client);
@@ -73,6 +85,6 @@ void loop()
     {
         loopTimer = millis();
         // updateDisplay();
-        Serial.printf("Updated firmware yey \n");
+        Serial.printf(".");
     }
 }
